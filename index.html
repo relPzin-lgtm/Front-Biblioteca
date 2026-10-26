@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#101827">
+  <title>Biblioteca Digital</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./style.css">
+  <script src="./app.js" defer></script>
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <a class="brand" href="#" aria-label="Biblioteca Digital - início">
+        <span class="brand-mark">B<span>+</span></span>
+        <span class="brand-copy"><strong>Biblioteca</strong><small>PAINEL DIGITAL</small></span>
+      </a>
+      <div class="nav-label">MENU PRINCIPAL</div>
+      <nav class="navigation">
+        <a class="nav-item active" href="#inicio"><span class="nav-icon">▦</span> Visão geral</a>
+        <a class="nav-item" href="#catalogo"><span class="nav-icon">▤</span> Acervo de livros</a>
+      </nav>
+      <div class="sidebar-bottom">
+        <div class="help-card">
+          <span class="help-icon">✦</span>
+          <strong>Seu conhecimento<br>começa aqui.</strong>
+          <p>Organize seu acervo de forma simples e prática.</p>
+        </div>
+        <div class="sidebar-foot"><span class="status-dot"></span> Sistema de biblioteca</div>
+      </div>
+    </aside>
+
+    <main class="main-content" id="inicio">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">ESPAÇO DE LEITURA</p>
+          <h1>Biblioteca Digital</h1>
+          <p class="subtitle">Gerencie seu acervo e mantenha seus livros organizados.</p>
+        </div>
+        <div class="topbar-actions">
+          <span class="connection-pill" id="connection-status"><span class="status-dot"></span> Verificando conexão</span>
+          <button class="primary-btn" id="open-add-modal"><span>＋</span> Novo livro</button>
+        </div>
+      </header>
+
+      <section class="stats-grid" aria-label="Resumo do acervo">
+        <article class="stat-card">
+          <div class="stat-top"><span>Total de livros</span><span class="stat-icon purple">▤</span></div>
+          <strong id="total-books">—</strong><small>Livros cadastrados no acervo</small>
+        </article>
+        <article class="stat-card">
+          <div class="stat-top"><span>Autores diferentes</span><span class="stat-icon blue">✎</span></div>
+          <strong id="total-authors">—</strong><small>Autores presentes no catálogo</small>
+        </article>
+        <article class="stat-card">
+          <div class="stat-top"><span>Publicações recentes</span><span class="stat-icon green">◷</span></div>
+          <strong id="recent-books">—</strong><small>Livros publicados desde 2020</small>
+        </article>
+      </section>
+
+      <section class="catalog-section" id="catalogo">
+        <div class="section-heading">
+          <div><p class="eyebrow">SEU ACERVO</p><h2>Catálogo de livros</h2><p class="section-desc">Consulte, edite ou remova os livros cadastrados.</p></div>
+          <button class="outline-btn" id="refresh-books">↻ Atualizar</button>
+        </div>
+        <div class="toolbar">
+          <label class="search-box"><span>⌕</span><input type="search" id="search-input" placeholder="Buscar por título ou autor..." autocomplete="off"></label>
+          <span class="results-count" id="results-count">Carregando livros...</span>
+        </div>
+        <div id="alert-area" role="status" aria-live="polite"></div>
+        <div id="loading-state" class="empty-state"><span class="loader"></span><strong>Carregando acervo</strong><p>Estamos buscando os livros cadastrados.</p></div>
+        <div id="books-grid" class="books-grid"></div>
+        <div id="empty-state" class="empty-state hidden"><span class="empty-icon">▤</span><strong>Nenhum livro encontrado</strong><p>Tente mudar sua busca ou cadastre um novo livro.</p><button class="primary-btn" id="empty-add-btn">Cadastrar primeiro livro</button></div>
+      </section>
+      <footer class="page-footer"><span>Biblioteca Digital</span><span>Organização que aproxima você da leitura.</span></footer>
+    </main>
+  </div>
+
+  <div class="modal-backdrop hidden" id="book-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <div class="modal">
+      <div class="modal-head"><div><p class="eyebrow">ACERVO DIGITAL</p><h2 id="modal-title">Adicionar livro</h2><p>Preencha os dados para registrar uma publicação.</p></div><button class="icon-btn" id="close-modal" aria-label="Fechar">×</button></div>
+      <form id="book-form">
+        <input type="hidden" id="book-id">
+        <label for="book-title">Título do livro <span>*</span></label>
+        <input id="book-title" name="titulo" type="text" placeholder="Ex.: O Pequeno Príncipe" required maxlength="180">
+        <label for="book-author">Autor <span>*</span></label>
+        <input id="book-author" name="autor" type="text" placeholder="Ex.: Antoine de Saint-Exupéry" required maxlength="140">
+        <label for="book-year">Ano de publicação</label>
+        <input id="book-year" name="ano" type="number" placeholder="Ex.: 2024" min="0" max="2100">
+        <p class="form-error hidden" id="form-error"></p>
+        <div class="modal-actions"><button type="button" class="outline-btn" id="cancel-modal">Cancelar</button><button type="submit" class="primary-btn" id="save-book-btn">Salvar livro</button></div>
+      </form>
+    </div>
+  </div>
+  <div class="toast hidden" id="toast" role="status" aria-live="polite"></div>
+</body>
+</html>
